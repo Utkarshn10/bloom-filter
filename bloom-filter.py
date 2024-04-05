@@ -12,14 +12,6 @@ class BloomFilter():
 
         for word in word_list:
             if len(word) > 0:
-                # just for reference to show bits in the array
-                print(self.bit_array[hash_func.md5_hash(word) % len(self.bit_array)]," ",
-                    self.bit_array[hash_func.sha1_hash(word) % len(self.bit_array)]," ",
-                    self.bit_array[hash_func.sha256_hash(word) % len(self.bit_array)]," ",
-                    self.bit_array[hash_func.sha512_hash(word) % len(self.bit_array)]," ",
-                    self.bit_array[hash_func.crc32_hash(word) % len(self.bit_array)]," ",
-                    self.bit_array[hash_func.murmur_hash(word) % len(self.bit_array)]," ",
-                    self.bit_array[hash_func.fnv_hash(word) % len(self.bit_array)])
                 if (
                     self.bit_array[hash_func.md5_hash(word) % len(self.bit_array)] and
                     self.bit_array[hash_func.sha1_hash(word) % len(self.bit_array)] and
@@ -78,7 +70,6 @@ class BloomFilter():
 
 if __name__ == "__main__":
     bf = BloomFilter()
-    # uncomment when new words are added
     bf.fill_bloom_filter()
     print('''Commands :
     1.  check word1 word2''')
