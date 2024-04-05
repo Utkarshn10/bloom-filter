@@ -6,8 +6,8 @@ class BloomFilter():
     # def __init__():
     # check whether the words in the list are present or not 
     def check_presence(word_list):
+        print(word_list)
         print("Found")
-        print("Not Found")
 
 
 
@@ -20,8 +20,8 @@ class BloomFilter():
     no. of hash functions(k) = ~5​
     '''
     def fill_bloom_filter(self):
-        f = open("words.txt","r")
-        bit_array = array.array("B", [0]*3837)
+        f = open("words2.txt","r")
+        bit_array = array.array("B", [0]*4796875)
         hash_func = HashFunctions
         try:
             for word in f.readline():
@@ -30,6 +30,8 @@ class BloomFilter():
                 bit_array[hash_func.sha256_hash(word)% len(bit_array)] |= 1
                 bit_array[hash_func.sha512_hash(word)% len(bit_array)] |= 1
                 bit_array[hash_func.crc32_hash(word)% len(bit_array)] |= 1
+                bit_array[hash_func.murmur_hash(word)% len(bit_array)] |= 1
+                bit_array[hash_func.fnv_hash(word)% len(bit_array)] |= 1
 
             # write to bin file
             script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -39,7 +41,7 @@ class BloomFilter():
                 bit_array.tofile(f)
 
             print("Created")
-            words_file_size = os.path.getsize("words.txt")
+            words_file_size = os.path.getsize("words2.txt")
             bin_file_size = os.path.getsize("bloom_filter.bin")
             print('''Some stats for nerds
             Disk Usage
@@ -56,6 +58,9 @@ if __name__ == "__main__":
     print('''Commands :
     1.  check word1 word2
     ''')
-    
+
+    user_input_words = input("Enter command: ")
+    user_input_words = user_input_words.replace("check","").split(" ")
+    bf.check_presence(user_input_words[1:])
 
     

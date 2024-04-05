@@ -1,5 +1,7 @@
 import hashlib 
 import zlib
+import mmh3
+
 class HashFunctions():
     def md5_hash(element):
         return int(hashlib.md5(element.encode()).hexdigest(), 16)
@@ -11,3 +13,11 @@ class HashFunctions():
         return int(hashlib.sha512(element.encode()).hexdigest(), 16)
     def crc32_hash(element):
         return zlib.crc32(element.encode())
+    def murmur_hash(element):
+        return mmh3.hash(element)
+    def fnv_hash(element):
+        fnv_prime = 16777619
+        hash_value = 2166136261
+        for byte in element.encode():
+            hash_value = (hash_value ^ byte) * fnv_prime
+        return hash_value
